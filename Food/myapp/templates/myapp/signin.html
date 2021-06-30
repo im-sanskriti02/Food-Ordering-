@@ -1,0 +1,64 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'myapp/base.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/signin.css' %}">
+
+</head>
+
+
+<body>
+    <div class='container'>
+        <div id='form'>
+            <form action="/signin/" method="post">
+                {% csrf_token %}
+
+                {% if error %}
+
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+
+                {% endif %}
+
+                <div>
+                    <h2>Register Here</h2>
+                </div>
+                <div id='labels'>
+                    <div>
+                        <label>First Name</label>
+                        <input type="text" value="{{values.first_name}}" id="first_name" name="first_name" placeholder="First Name">
+                    </div>
+                    <div>
+                        <label>Last Name</label>
+                        <input type="text" value="{{values.last_name}}" id="last_name" name="last_name" placeholder="Last Name">
+                    </div>
+                    <div>
+                        <label>Phone</label>
+                        <input type="number" value="{{values.phone}}" id="phone" name="phone" placeholder="Phone Number">
+
+                    </div>
+                    <div>
+                        <label>Email</label>
+                        <input type="email" value="{{values.email}}" id="email" name="email" placeholder="Email">
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" id="password1" name="password1" placeholder="Enter Password">
+                    </div>
+                    <div>
+                        <label>Confirm Password</label>
+                        <input type="password" id="password2" name="password2" placeholder="Re-Enter Password">
+                    </div>
+                    <div id="submit">
+                        <input type="submit" value="Register">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

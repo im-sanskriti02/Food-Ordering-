@@ -1,0 +1,86 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+
+<div class="fluid-container">
+
+  <head>
+    <link rel="stylesheet" href="{% static 'myapp/base.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/index.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/detail.css' %}">
+    <link rel="stylesheet" href="http://static.sasongsmat.nu/fonts/vegetarian.css" />
+  </head>
+ 
+ <div id="hr"><h3>Menu</h3></div>
+ 
+ <div id="items">
+  {% for item in item_list%}
+  <div class="container" id="card">
+    <div id="{{item.id}}">
+      <div id="images">
+        <img id="card-image" src="{{item.item_image.url}}">
+        {% if item.food_type == "Veg" %}
+        <span class="veg-indian-vegetarian"></span>
+        {% else %}
+        <span id="non-veg" class="veg-indian-vegetarian"></span>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <div class="card-title">
+          <h4>{{item.item_name}}</h4>
+        </div>
+        <div class="card-branch">
+          Price {{item.item_price|currency}}
+        </div>
+      </div>
+    </div>
+
+    <!--{{item | is_in_cart:request.session.cart}}-->
+
+    <div class="footer">
+
+      {% if item|is_in_cart:request.session.cart %}
+
+      <div class="row">
+        <div>
+          <form action="/detail/{{item.restraunt_id}}/#{{item.id}}" method="POST">
+            {% csrf_token %}
+            <input hidden type="text" name="product" value="{{item.id}}">
+            <input hidden type="text" name="remove" value="True">
+            <input id="submit" type="submit" value=" - ">
+          </form>
+        </div>
+        <div id="p">{{item|cart_quantity:request.session.cart}} in Cart</div>
+
+        <div>
+          <form action="/detail/{{item.restraunt_id}}/#{{item.id}}" method="POST">
+            {% csrf_token %}
+            <input hidden type="text" name="product" value="{{item.id}}">
+            <input id="submit" type="submit" value=" + ">
+          </form>
+        </div>
+      </div>
+
+      {% else %}
+
+      <form action="/detail/{{item.restraunt_id}}/#{{item.id}}" method="POST">
+        {% csrf_token %}
+        <input hidden type="text" name="product" value="{{item.id}}">
+        <input type="submit" value="Add To Cart">
+      </form>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+{% endfor %}
+</div>
+
+
+</div>
+
+{% endblock %}

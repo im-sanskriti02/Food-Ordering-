@@ -1,0 +1,22 @@
+#form {
+    height: 60vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: space-around;
+    height: -webkit-fill-available;
+}
+
+#labels {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    justify-content: space-around;
+}
+
+[type="submit"] {
+    margin-top: 20px;
+}
